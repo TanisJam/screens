@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
+import { TanStackRouterVite } from '@tanstack/router-plugin/vite';
 import autoprefixer from 'autoprefixer';
 import tailwindcss from 'tailwindcss';
 
@@ -10,5 +11,5 @@ export default defineConfig({
       plugins: [tailwindcss, autoprefixer],
     },
   },
-  plugins: [react()],
+  plugins: [TanStackRouterVite(), react()],
 });
