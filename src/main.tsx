@@ -1,10 +1,11 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { RouterProvider, createRouter } from '@tanstack/react-router';
-
 import { ConfigProvider, theme } from 'antd';
 
 import './index.css';
+import 'leaflet/dist/leaflet.css';
+import '@ant-design/v5-patch-for-react-19';
 
 import { routeTree } from './routeTree.gen';
 import { Provider } from 'react-redux';

@@ -33,9 +33,6 @@ function Index() {
         );
         return;
       }
-
-      console.log('values:', values);
-
       router.navigate({
         to: '/map',
         search: createDisplaysSearchAdapter(data[0], values),

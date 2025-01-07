@@ -30,7 +30,7 @@ export const DisplayListItem = ({ item }: DisplayListingProps) => {
             : []
         }
       >
-        <div className="flex gap-4 relative">
+        <div className="flex sm:flex-col lg:flex-row gap-4 relative">
           <DisplayItemCarousel {...item} />
           <div className="flex-1 space-y-2 py-2 pr-2">
             <div className="flex flex-col justify-between items-start">
@@ -64,7 +64,7 @@ export const DisplayListItem = ({ item }: DisplayListingProps) => {
             </div>
           </div>
 
-          <div className="flex-col gap-2 mt-2 mr-2 hidden sm:flex">
+          <div className="flex-col gap-2 mt-2 mr-2 hidden md:flex">
             <Tooltip title="Agregar">
               <Button type="primary" icon={<PlusOutlined />} />
             </Tooltip>
