@@ -1,5 +1,18 @@
-export type LocationType = 'indoor' | 'outdoor' | 'pos' | 'buses';
-export type SizeType = 'small' | 'medium' | 'big' | 'giant';
+export const SizeTypeText = {
+  small: 'Pequeño',
+  medium: 'Mediano',
+  big: 'Grande',
+  giant: 'Gigante',
+} as const;
+export type SizeType = keyof typeof SizeTypeText;
+
+export const LocationTypeText = {
+  indoor: 'Interior',
+  outdoor: 'Exterior',
+  pos: 'Punto de Venta',
+  buses: 'Buses',
+} as const;
+export type LocationType = keyof typeof LocationTypeText;
 
 export interface GetDisplaysParams {
   date_from: string;
@@ -39,8 +52,8 @@ export type Display = {
   slot_length: number;
   shows_per_hour: number;
   price_per_day: number;
-  location_type: string;
-  size_type: string;
+  location_type: LocationType;
+  size_type: SizeType;
   size_width: number;
   size_height: number;
   description: string | null;
@@ -51,6 +64,17 @@ export type Display = {
   is_online: boolean;
   pictures: DisplayPicture[];
 };
+
+export interface DisplayItem {
+  id: number;
+  name: string;
+  price: number;
+  resolution: string;
+  size: SizeType;
+  duration: number;
+  type: LocationType;
+  images: string[];
+}
 
 export interface DisplaySearchResponse {
   total: number;

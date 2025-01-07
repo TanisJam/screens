@@ -3,7 +3,7 @@ import {
   GetDisplaysParams,
   DisplaySearchResponse,
 } from '@/models/display.model';
-import { convertArrayParams } from '@/utilities/convert-array-params.utility';
+import { convertArrayParams } from '@/utilities';
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
