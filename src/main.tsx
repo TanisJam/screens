@@ -4,15 +4,12 @@ import { RouterProvider, createRouter } from '@tanstack/react-router';
 
 import './index.css';
 
-// Import the generated route tree
 import { routeTree } from './routeTree.gen';
 import { Provider } from 'react-redux';
 import { store } from '@/store/root/config.store';
 
-// Create a new router instance
 const router = createRouter({ routeTree });
 
-// Register the router instance for type safety
 declare module '@tanstack/react-router' {
   interface Register {
     router: typeof router;

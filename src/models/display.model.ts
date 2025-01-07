@@ -62,10 +62,17 @@ export interface DisplaySearchResponse {
   data: Display[];
 }
 
+export interface FetchDisplaysPayload {
+  controller: AbortController;
+  params: GetDisplaysParams;
+}
 
 export interface UseDisplays {
   displays: Display[];
   displaysLoading: boolean;
   displaysError: string;
-  fetchDisplays: (controller: AbortController) => void;
+  fetchDisplays: (
+    controller: AbortController,
+    params: GetDisplaysParams
+  ) => void;
 }

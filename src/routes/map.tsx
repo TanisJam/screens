@@ -10,8 +10,12 @@ function RouteComponent() {
   const { displays, displaysLoading, fetchDisplays } = useDisplays();
 
   useEffect(() => {
+    const params = {
+      date_from: '2024-12-23',
+      date_to: '2024-12-29',
+    };
     const controller = new AbortController();
-    fetchDisplays(controller);
+    fetchDisplays(controller, params);
 
     return () => {
       controller.abort();

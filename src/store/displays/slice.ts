@@ -5,7 +5,7 @@ import {
 } from '@reduxjs/toolkit';
 
 import type { RootState } from '@/store/root/config.store';
-import { Display } from '@/models/display.model';
+import { Display, FetchDisplaysPayload } from '@/models/display.model';
 
 export interface DisplaysState {
   data: Display[];
@@ -31,14 +31,16 @@ export const displaySlice = createSlice({
       state.loading = false;
     },
     fetchDisplaysError: (state, action: PayloadAction<string>) => {
-      state.error = action.payload;
-      state.loading = false;
+      if (!(action.payload === 'canceled')) {
+        state.error = action.payload;
+        state.loading = false;
+      }
     },
   },
 });
 
 export const displaysActions = {
-  fetchDisplays: createAction<AbortController>(`${displaySlice.name}`),
+  fetchDisplays: createAction<FetchDisplaysPayload>(`${displaySlice.name}`),
   fetchDisplaysIsLoading: displaySlice.actions.fetchDisplaysIsLoading,
   fetchDisplaysSuccess: displaySlice.actions.fetchDisplaysSuccess,
   fetchDisplaysError: displaySlice.actions.fetchDisplaysError,
