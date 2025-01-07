@@ -38,7 +38,7 @@ export const displaySlice = createSlice({
 });
 
 export const displaysActions = {
-  fetchDisplays: createAction(`${displaySlice.name}`),
+  fetchDisplays: createAction<AbortController>(`${displaySlice.name}`),
   fetchDisplaysIsLoading: displaySlice.actions.fetchDisplaysIsLoading,
   fetchDisplaysSuccess: displaySlice.actions.fetchDisplaysSuccess,
   fetchDisplaysError: displaySlice.actions.fetchDisplaysError,

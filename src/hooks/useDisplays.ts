@@ -15,9 +15,9 @@ const useDisplays = (): Readonly<UseDisplays> => {
     displays: useAppSelector(selectDisplays),
     displaysLoading: useAppSelector(selectDisplaysLoading),
     displaysError: useAppSelector(selectDisplaysError),
-    fetchDisplays: useCallback(() => {
+    fetchDisplays: useCallback((controller: AbortController) => {
       dispatch(displaysActions.fetchDisplaysIsLoading());
-      dispatch(displaysActions.fetchDisplays());
+      dispatch(displaysActions.fetchDisplays(controller));
     }, [dispatch]),
   };
 };

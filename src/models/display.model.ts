@@ -67,5 +67,5 @@ export interface UseDisplays {
   displays: Display[];
   displaysLoading: boolean;
   displaysError: string;
-  fetchDisplays: VoidFunction;
+  fetchDisplays: (controller: AbortController) => void;
 }

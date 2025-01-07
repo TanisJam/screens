@@ -16,7 +16,8 @@ const apiClient = axios.create({
 });
 
 export const getDisplays = async (
-  params: GetDisplaysParams
+  params: GetDisplaysParams,
+  signal?: AbortSignal
 ): Promise<DisplaySearchResponse> => {
   const response = await apiClient.get<DisplaySearchResponse>(
     '/displays/searchTest',
@@ -25,6 +26,7 @@ export const getDisplays = async (
         ...params,
         ...convertArrayParams(params, ['location_type', 'size_type']),
       },
+      signal,
     }
   );
   return response.data;

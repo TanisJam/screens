@@ -10,7 +10,12 @@ function RouteComponent() {
   const { displays, displaysLoading, fetchDisplays } = useDisplays();
 
   useEffect(() => {
-    fetchDisplays();
+    const controller = new AbortController();
+    fetchDisplays(controller);
+
+    return () => {
+      controller.abort();
+    };
   }, [fetchDisplays]);
 
   return (
@@ -25,5 +30,3 @@ function RouteComponent() {
     </div>
   );
 }
-
-// Add de hook to cancel api request (From Gentleman)

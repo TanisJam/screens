@@ -4,14 +4,21 @@ import { call, put, takeEvery } from 'redux-saga/effects';
 import { getDisplays } from '@/services/api.service';
 import { type DisplaySearchResponse } from '@/models/display.model';
 import { displaysActions } from '@/store/displays/slice';
+import { PayloadAction } from '@reduxjs/toolkit';
 
-export function* onGetDisplays(): SagaIterator {
+export function* onGetDisplays(
+  action: PayloadAction<AbortController>
+): SagaIterator {
   try {
     const params = {
       date_from: '2024-12-23',
       date_to: '2024-12-29',
     };
-    const response: DisplaySearchResponse = yield call(getDisplays, params);
+    const response: DisplaySearchResponse = yield call(
+      getDisplays,
+      params,
+      action.payload.signal
+    );
     yield put(displaysActions.fetchDisplaysSuccess(response.data));
   } catch (error: unknown) {
     if (error instanceof Error) {
