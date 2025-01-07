@@ -7,7 +7,7 @@ export const Route = createFileRoute('/map')({
 });
 
 function RouteComponent() {
-  const { displays, fetchDisplays } = useDisplays();
+  const { displays, displaysLoading, fetchDisplays } = useDisplays();
 
   useEffect(() => {
     fetchDisplays();
@@ -16,6 +16,7 @@ function RouteComponent() {
   return (
     <div className="p-2">
       <h1 className="text-3xl font-bold">Mapa</h1>
+      {displaysLoading && <p>Loading...</p>}
       <ul>
         {displays.map((display) => (
           <li key={display.id}>{display.name}</li>
@@ -24,3 +25,5 @@ function RouteComponent() {
     </div>
   );
 }
+
+// Add de hook to cancel api request (From Gentleman)

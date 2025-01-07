@@ -45,5 +45,8 @@ export const displaysActions = {
 };
 
 export const selectDisplays = (state: RootState) => state.displays.data;
+export const selectDisplaysLoading = (state: RootState) =>
+  state.displays.loading;
+export const selectDisplaysError = (state: RootState) => state.displays.error;
 
 export default displaySlice.reducer;

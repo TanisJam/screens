@@ -61,3 +61,11 @@ export interface DisplaySearchResponse {
   to: number;
   data: Display[];
 }
+
+
+export interface UseDisplays {
+  displays: Display[];
+  displaysLoading: boolean;
+  displaysError: string;
+  fetchDisplays: VoidFunction;
+}
