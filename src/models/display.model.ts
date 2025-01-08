@@ -76,6 +76,11 @@ export interface DisplayItem {
   images: string[];
 }
 
+export interface DisplayLocation {
+  latitude: number;
+  longitude: number;
+}
+
 export interface DisplaySearchResponse {
   total: number;
   per_page: number;

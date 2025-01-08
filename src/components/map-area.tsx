@@ -1,32 +1,25 @@
 import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
+import { DisplayLocation } from '@/models';
 
 interface MapAreaProps {
-  lat_ne?: number;
-  lat_sw?: number;
-  lng_ne?: number;
-  lng_sw?: number;
+  bounds: [[number, number], [number, number]];
+  screensMarkers: DisplayLocation[];
+  onBoundsChange?: (bounds: [[number, number], [number, number]]) => void;
 }
 
 export const MapArea: React.FC<MapAreaProps> = ({
-  lat_ne = -32.8688946,
-  lat_sw = -33.0389608,
-  lng_ne = -60.6051322,
-  lng_sw = -60.7969586,
+  bounds,
+  screensMarkers = [],
+  onBoundsChange,
 }) => {
-  const bounds: [[number, number], [number, number]] = [
-    [lat_sw, lng_sw],
-    [lat_ne, lng_ne],
-  ];
-
-  const center: [number, number] = [
-    (lat_ne + lat_sw) / 2,
-    (lng_ne + lng_sw) / 2,
-  ];
-
   function MapBoundsLogger() {
     const map = useMapEvents({
       moveend: () => {
         console.log('Map bounds:', map.getBounds());
+        onBoundsChange?.([
+          [map.getBounds().getSouth(), map.getBounds().getWest()],
+          [map.getBounds().getNorth(), map.getBounds().getEast()],
+        ]);
       },
     });
     return null;
@@ -39,7 +32,21 @@ export const MapArea: React.FC<MapAreaProps> = ({
         attribution="Google Maps"
         url="https://www.google.cn/maps/vt?lyrs=m@189&gl=cn&x={x}&y={y}&z={z}"
       />
-      <Marker position={center} />
+      {screensMarkers.map((screen, index) => (
+        <Marker
+          key={index}
+          position={[screen.latitude, screen.longitude]}
+          title="Pantalla"
+          eventHandlers={{
+            click: () => {
+              console.log('click');
+            },
+            mouseover: () => {
+              console.log('mouseover');
+            },
+          }}
+        />
+      ))}
     </MapContainer>
   );
 };

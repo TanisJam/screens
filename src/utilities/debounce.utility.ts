@@ -1,13 +1,19 @@
-export const debounce = <T extends (arg: string) => Promise<void>>(
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function debounce<T extends (...args: any) => Promise<void>>(
   func: T,
   wait: number
-): T => {
-  let timeoutId: NodeJS.Timeout | undefined;
+) {
+  let timeout: NodeJS.Timeout;
 
-  return function (value: string) {
-    clearTimeout(timeoutId);
-    return new Promise<void>((resolve) => {
-      timeoutId = setTimeout(() => resolve(func(value)), wait);
-    });
-  } as T;
-};
+  return function executedFunction(...args: Parameters<T>) {
+    const later = () => {
+      clearTimeout(timeout);
+
+      func(...args);
+    };
+
+    clearTimeout(timeout);
+
+    timeout = setTimeout(later, wait);
+  };
+}
