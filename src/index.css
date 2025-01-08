@@ -10,3 +10,10 @@ body {
     color-scheme: dark;
   }
 }
+
+@media (max-width: 640px) {
+  .ant-picker-panels {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+}

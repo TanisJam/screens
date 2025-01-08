@@ -1,7 +1,7 @@
 import { type SagaIterator } from 'redux-saga';
 import { call, put, takeEvery } from 'redux-saga/effects';
 
-import { getDisplays } from '@/services/api.service';
+import { getDisplays } from '@/services';
 import {
   type DisplaySearchResponse,
   FetchDisplaysPayload,
