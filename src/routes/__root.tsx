@@ -6,7 +6,7 @@ export const Route = createRootRoute({
     <>
       <header className="p-2 flex gap-2 container mx-auto max-w-3xl">
         <Link to="/" className="[&.active]:font-bold">
-          Home
+          Inicio
         </Link>
       </header>
       <hr />

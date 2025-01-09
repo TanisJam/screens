@@ -10,8 +10,13 @@ interface DisplayListingProps {
 }
 
 export const DisplayListItem = ({ item }: DisplayListingProps) => {
-  const { addDisplay } = useAppState();
+  const { addDisplay, toggleModal } = useAppState();
   const breakpoint = useBreakpoints();
+
+  const handleAddDisplay = () => {
+    addDisplay(item.id);
+    toggleModal();
+  };
 
   return (
     <List.Item>
@@ -25,7 +30,7 @@ export const DisplayListItem = ({ item }: DisplayListingProps) => {
                   <Button
                     type="text"
                     icon={<InfoCircleOutlined />}
-                    onClick={() => addDisplay(item)}
+                    onClick={handleAddDisplay}
                   />
                 </Tooltip>,
                 <Tooltip title="Agregar">
@@ -77,7 +82,7 @@ export const DisplayListItem = ({ item }: DisplayListingProps) => {
               <Button
                 type="text"
                 icon={<InfoCircleOutlined />}
-                onClick={() => addDisplay(item)}
+                onClick={handleAddDisplay}
               />
             </Tooltip>
           </div>

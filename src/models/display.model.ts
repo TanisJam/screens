@@ -66,7 +66,7 @@ export type Display = {
 };
 
 export interface DisplayItem {
-  id: number;
+  id: Display['id'];
   name: string;
   price: number;
   resolution: string;
@@ -79,6 +79,7 @@ export interface DisplayItem {
 export interface DisplayLocation {
   latitude: number;
   longitude: number;
+  id: Display['id'];
 }
 
 export interface DisplaySearchResponse {

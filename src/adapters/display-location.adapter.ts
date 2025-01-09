@@ -11,6 +11,7 @@ export const convertDisplayToLocation = (
     return {
       latitude: display.latitude,
       longitude: display.longitude,
+      id: display.id,
     };
   });
 };

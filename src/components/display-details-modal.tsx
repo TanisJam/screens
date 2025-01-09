@@ -1,5 +1,5 @@
 import { Modal, Carousel, Button } from 'antd';
-import { Display } from '@/models';
+import { Display, LocationTypeText, SizeTypeText } from '@/models';
 import {
   EnvironmentOutlined,
   GlobalOutlined,
@@ -73,13 +73,13 @@ export const DisplayDetailsModal: React.FC<DisplayDetailsModalProps> = ({
             <InfoCard
               icon={<FullscreenOutlined className="text-blue-500" />}
               title="Tipo"
-              value={item.location_type}
-              subtitle={`${item.size_width}m x ${item.size_height}m`}
+              value={`${LocationTypeText[item.location_type]} - ${SizeTypeText[item.size_type]}`}
+              subtitle={`${item.size_width.toFixed(2)}m x ${item.size_height.toFixed(2)}m`}
             />
             <InfoCard
               icon={<ClockCircleOutlined className="text-green-500" />}
               title="Tiempo de anuncios"
-              value={`${item.slot_length}s`}
+              value={`${item.slot_length / 1000}s`}
               subtitle={`${item.shows_per_hour} shows/hora`}
             />
             <InfoCard
@@ -91,7 +91,7 @@ export const DisplayDetailsModal: React.FC<DisplayDetailsModalProps> = ({
             <InfoCard
               icon={<DollarOutlined className="text-yellow-500" />}
               title="Precio por día"
-              value={`${item.price_currency} ${item.price_per_day}`}
+              value={`${item.price_currency} ${item.price_per_day.toFixed(2)}`}
               subtitle={`CPMI: ${item.cpmi}`}
             />
           </div>

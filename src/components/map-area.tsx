@@ -1,5 +1,7 @@
 import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
 import { DisplayLocation } from '@/models';
+import { useAppState } from '@/hooks';
+import L from 'leaflet';
 
 interface MapAreaProps {
   bounds: [[number, number], [number, number]];
@@ -12,6 +14,8 @@ export const MapArea: React.FC<MapAreaProps> = ({
   screensMarkers = [],
   onBoundsChange,
 }) => {
+  const { addDisplay, toggleModal, selectedDisplay } = useAppState();
+
   function MapBoundsLogger() {
     const map = useMapEvents({
       moveend: () => {
@@ -24,6 +28,20 @@ export const MapArea: React.FC<MapAreaProps> = ({
     return null;
   }
 
+  const Icon = L.icon({
+    iconUrl: '/pin.svg',
+    iconSize: [38, 95],
+  });
+  const IconFilled = L.icon({
+    iconUrl: '/pin-filled.svg',
+    iconSize: [38, 95],
+  });
+
+  const handleAddDisplay = (id: number) => {
+    addDisplay(id);
+    toggleModal();
+  };
+
   return (
     <MapContainer className="h-[50vh] sm:h-[90vh] w-full" bounds={bounds}>
       <MapBoundsLogger />
@@ -34,17 +52,14 @@ export const MapArea: React.FC<MapAreaProps> = ({
       {screensMarkers.map((screen, index) => (
         <Marker
           key={index}
+          riseOnHover
+          icon={selectedDisplay?.id === screen.id ? IconFilled : Icon}
           position={[screen.latitude, screen.longitude]}
           title="Pantalla"
           eventHandlers={{
-            click: () => {
-              console.log('click');
-            },
-            mouseover: () => {
-              console.log('mouseover');
-            },
+            click: () => handleAddDisplay(screen.id),
           }}
-        />
+        ></Marker>
       ))}
     </MapContainer>
   );
