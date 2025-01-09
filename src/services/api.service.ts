@@ -3,7 +3,7 @@ import {
   GetDisplaysParams,
   DisplaySearchResponse,
 } from '@/models/display.model';
-import { convertArrayParams } from '@/utilities/convert-array-params.utility';
+import { convertArrayParams } from '@/utilities';
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -29,5 +29,15 @@ export const getDisplays = async (
       signal,
     }
   );
+  return response.data;
+};
+
+export const getDisplayById = async (id: string) => {
+  const response = await apiClient.get(`/displays/${id}`, {
+    params: {
+      currency: 'USD',
+      invoice_issuing_country: 'AR',
+    },
+  });
   return response.data;
 };
