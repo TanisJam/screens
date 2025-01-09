@@ -8,7 +8,6 @@ interface DisplayListingProps {
   loading?: boolean;
 }
 
-// TODO: Implement Pagination on the request
 export const DisplayListing = ({ displays, loading }: DisplayListingProps) => {
   return (
     <List

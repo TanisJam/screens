@@ -1,8 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { useDisplays } from '@/hooks';
+import { useDisplays, useAppState } from '@/hooks';
 import { useEffect, useState } from 'react';
 import { GetDisplaysParams } from '@/models';
-import { DisplayListing } from '@/components';
+import { DisplayDetailsModal, DisplayListing } from '@/components';
 import { convertDisplayToLocation, displayToDisplayItem } from '@/adapters';
 import { MapArea } from '@/components/map-area';
 import { debounce } from '@/utilities';
@@ -16,6 +16,7 @@ export const Route = createFileRoute('/map')({
 });
 
 function RouteComponent() {
+  const { addDisplay, selectedDisplay } = useAppState();
   const { displays, displaysLoading, fetchDisplays, setQuery, resetQuery } =
     useDisplays();
   const params = Route.useSearch();
@@ -86,6 +87,13 @@ function RouteComponent() {
           />
         </div>
       </div>
+      {selectedDisplay !== null && (
+        <DisplayDetailsModal
+          visible={selectedDisplay !== null}
+          onClose={() => addDisplay(null)}
+          item={selectedDisplay}
+        />
+      )}
     </div>
   );
 }

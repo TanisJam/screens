@@ -3,13 +3,14 @@ const { Title, Text } = Typography;
 import { DisplayItemCarousel } from '@/components';
 import { InfoCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { DisplayItem, SizeTypeText } from '@/models';
-import { useBreakpoints } from '@/hooks';
+import { useAppState, useBreakpoints } from '@/hooks';
 
 interface DisplayListingProps {
   item: DisplayItem;
 }
 
 export const DisplayListItem = ({ item }: DisplayListingProps) => {
+  const { addDisplay } = useAppState();
   const breakpoint = useBreakpoints();
 
   return (
@@ -69,7 +70,11 @@ export const DisplayListItem = ({ item }: DisplayListingProps) => {
               <Button type="primary" icon={<PlusOutlined />} />
             </Tooltip>
             <Tooltip title="Más información">
-              <Button type="text" icon={<InfoCircleOutlined />} />
+              <Button
+                type="text"
+                icon={<InfoCircleOutlined />}
+                onClick={() => addDisplay(item)}
+              />
             </Tooltip>
           </div>
         </div>
