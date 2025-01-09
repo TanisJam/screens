@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Input, Button, Select, Space, Form } from 'antd';
 import { SearchOutlined, FilterOutlined } from '@ant-design/icons';
 import { SizeTypeText, LocationTypeText, GetDisplaysParams } from '@/models';
@@ -56,6 +56,20 @@ export const DisplayFilters: React.FC<FilterProps> = ({
     resetFilters();
     setIsFiltersVisible(false);
   };
+
+  useEffect(() => {
+    if (!isFiltersVisible) {
+      setFilters({
+        location_type: [],
+        size_type: [],
+        price_min: 0,
+        price_max: 0,
+      });
+      resetFilters();
+    }
+    // This effect should only run when isFiltersVisible changes to avoid infinite loop
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isFiltersVisible]);
 
   return (
     <div className="w-full max-w-3xl mx-auto p-4">

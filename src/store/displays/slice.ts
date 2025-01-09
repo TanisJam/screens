@@ -40,7 +40,6 @@ export const displaySlice = createSlice({
       state.loading = true;
     },
     fetchDisplaysSuccess: (state, action: PayloadAction<Display[]>) => {
-      console.log('action.payload', action.payload);
       state.data = action.payload;
       state.loading = false;
     },
