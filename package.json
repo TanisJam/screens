@@ -16,6 +16,8 @@
     "@types/node": "^22.10.5",
     "antd": "^5.23.0",
     "axios": "^1.7.9",
+    "jspdf": "^2.5.2",
+    "jspdf-autotable": "^3.8.4",
     "leaflet": "^1.9.4",
     "react": "19.0.0-rc.1",
     "react-dom": "19.0.0-rc.1",

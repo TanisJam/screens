@@ -1,7 +1,9 @@
 import { Badge, Dropdown, Button } from 'antd';
-import { ShoppingCartOutlined, DeleteOutlined } from '@ant-design/icons';
+import { ShoppingCartOutlined, DeleteOutlined, DownloadOutlined } from '@ant-design/icons';
 import { CartItem } from '@/store/cart/slice';
 import { useAppState } from '@/hooks';
+import { generatePDF } from '@/utilities';
+
 
 interface CartDropdownProps {
   items: CartItem[];
@@ -94,12 +96,21 @@ export const CartDropdown: React.FC<CartDropdownProps> = ({
               <span className="font-bold">${calculateTotal()}</span>
             </div>
 
-            <Button
-              type="primary"
-              className="w-full mt-4 bg-blue-500 hover:bg-blue-600"
-            >
-              Checkout
-            </Button>
+            <div className="flex gap-2 mt-4">
+              <Button
+                onClick={() => generatePDF(items, getTotalDays, calculateItemTotal, calculateTotal())}
+                icon={<DownloadOutlined />}
+                className="bg-green-500 hover:bg-green-600 text-white"
+              >
+                PDF
+              </Button>
+              <Button
+                type="primary"
+                className="flex-1 bg-blue-500 hover:bg-blue-600"
+              >
+                Checkout
+              </Button>
+            </div>
           </>
         )}
       </div>
@@ -124,3 +135,4 @@ export const CartDropdown: React.FC<CartDropdownProps> = ({
     </Badge>
   );
 };
+
