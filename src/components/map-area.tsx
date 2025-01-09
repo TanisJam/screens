@@ -37,7 +37,7 @@ export const MapArea: React.FC<MapAreaProps> = ({
     iconSize: [38, 95],
   });
 
-  const handleAddDisplay = (id: number) => {
+  const handleDisplayInfo = (id: number) => {
     addDisplay(id);
     toggleModal();
   };
@@ -57,7 +57,7 @@ export const MapArea: React.FC<MapAreaProps> = ({
           position={[screen.latitude, screen.longitude]}
           title="Pantalla"
           eventHandlers={{
-            click: () => handleAddDisplay(screen.id),
+            click: () => handleDisplayInfo(screen.id),
           }}
         ></Marker>
       ))}

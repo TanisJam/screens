@@ -29,7 +29,7 @@ export const DisplayItemCarousel = ({
   };
 
   return (
-    <div className="relative w-36 h-48 sm:w-52 sm:h-48 flex-shrink-0">
+    <div className="relative w-36 h-48 sm:w-52 sm:h-48 flex-shrink-0 mx-auto">
       <Carousel fade dots={false} arrows>
         {images.map((image, index) => (
           <div
@@ -39,6 +39,10 @@ export const DisplayItemCarousel = ({
             <img
               alt={`${name} - View ${index + 1}`}
               src={image}
+              onError={(e) => {
+                e.currentTarget.src = '/fallback.png';
+              }}
+              
               className="w-36 h-48 sm:w-52 sm:h-48 object-cover rounded-md"
               style={{
                 transform: 'scale(1)',

@@ -30,6 +30,7 @@ export const useDisplays = (): Readonly<UseDisplays> => {
     displays: useAppSelector(selectDisplays),
     displaysLoading: useAppSelector(selectDisplaysLoading),
     displaysError: useAppSelector(selectDisplaysError),
+    displayQuery: query,
     setQuery: useCallback(
       (params: GetDisplaysParams) => {
         dispatch(displaysActions.setQuery(params));

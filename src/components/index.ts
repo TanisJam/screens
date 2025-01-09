@@ -1,3 +1,4 @@
+export * from './cart-dropdown';
 export * from './display-details-modal';
 export * from './display-filters';
 export * from './display-item-carousel';
