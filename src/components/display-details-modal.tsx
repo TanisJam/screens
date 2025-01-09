@@ -1,8 +1,12 @@
-import React from 'react';
-import { Modal, Button, Row, Col, Typography } from 'antd';
+import { Modal, Carousel, Button } from 'antd';
 import { Display } from '@/models';
-
-const { Title, Text } = Typography;
+import {
+  EnvironmentOutlined,
+  GlobalOutlined,
+  ClockCircleOutlined,
+  FullscreenOutlined,
+  DollarOutlined,
+} from '@ant-design/icons';
 
 interface DisplayDetailsModalProps {
   visible: boolean;
@@ -15,126 +19,123 @@ export const DisplayDetailsModal: React.FC<DisplayDetailsModalProps> = ({
   onClose,
   item,
 }) => {
-
-  console.log('DisplayDetailsModalProps', item);
-
   return (
     <Modal
-      title="Detalles del Item"
+      title={item.name}
       open={visible}
       onCancel={onClose}
       footer={[
-        <Button key="close" onClick={onClose} type="primary">
-          Cerrar
+        <Button
+          key="agregar"
+          type="primary"
+          className="bg-blue-500"
+          onClick={onClose}
+        >
+          Agregar
         </Button>,
       ]}
+      width={1200}
+      className="top-4"
     >
-      <Row gutter={[16, 16]}>
-        <Col span={12}>
-          <Title level={5}>ID</Title>
-          <Text>{item.id}</Text>
-        </Col>
-        <Col span={12}>
-          <Title level={5}>Nombre</Title>
-          <Text>{item.name}</Text>
-        </Col>
-        <Col span={12}>
-          <Title level={5}>Resolución</Title>
-          <Text>{item.resolution_width} x {item.resolution_height}</Text>
-        </Col>
-        <Col span={12}>
-          <Title level={5}>Latitud</Title>
-          <Text>{item.latitude}</Text>
-        </Col>
-        <Col span={12}>
-          <Title level={5}>Longitud</Title>
-          <Text>{item.longitude}</Text>
-        </Col>
-        <Col span={12}>
-          <Title level={5}>Área administrativa nivel 1</Title>
-          <Text>{item.administrative_area_level_1}</Text>
-        </Col>
-        <Col span={12}>
-          <Title level={5}>Área administrativa nivel 2</Title>
-          <Text>{item.administrative_area_level_2}</Text>
-        </Col>
-        <Col span={12}>
-          <Title level={5}>Dirección formateada</Title>
-          <Text>{item.formatted_address}</Text>
-        </Col>
-        <Col span={12}>
-          <Title level={5}>Código postal</Title>
-          <Text>{item.zip_code}</Text>
-        </Col>
-        <Col span={12}>
-          <Title level={5}>País</Title>
-          <Text>{item.country}</Text>
-        </Col>
-        <Col span={12}>
-          <Title level={5}>Slots</Title>
-          <Text>{item.slots}</Text>
-        </Col>
-        <Col span={12}>
-          <Title level={5}>Duración del slot</Title>
-          <Text>{item.slot_length}</Text>
-        </Col>
-        <Col span={12}>
-          <Title level={5}>Shows por hora</Title>
-          <Text>{item.shows_per_hour}</Text>
-        </Col>
-        <Col span={12}>
-          <Title level={5}>Precio por día</Title>
-          <Text>{item.price_per_day}</Text>
-        </Col>
-        <Col span={12}>
-          <Title level={5}>Tipo de ubicación</Title>
-          <Text>{item.location_type}</Text>
-        </Col>
-        <Col span={12}>
-          <Title level={5}>Tamaño del tipo</Title>
-          <Text>{item.size_type}</Text>
-        </Col>
-        <Col span={12}>
-          <Title level={5}>Ancho del tamaño</Title>
-          <Text>{item.size_width}</Text>
-        </Col>
-        <Col span={12}>
-          <Title level={5}>Altura del tamaño</Title>
-          <Text>{item.size_height}</Text>
-        </Col>
-        <Col span={24}>
-          <Title level={5}>Descripción</Title>
-          <Text>{item.description}</Text>
-        </Col>
-        <Col span={12}>
-          <Title level={5}>ISO del país</Title>
-          <Text>{item.country_iso}</Text>
-        </Col>
-        <Col span={12}>
-          <Title level={5}>CPM programático externo</Title>
-          <Text>{item.external_programmatic_cpm}</Text>
-        </Col>
-        <Col span={12}>
-          <Title level={5}>Moneda del precio</Title>
-          <Text>{item.price_currency}</Text>
-        </Col>
-        <Col span={12}>
-          <Title level={5}>CPMI</Title>
-          <Text>{item.cpmi}</Text>
-        </Col>
-        <Col span={12}>
-          <Title level={5}>Está en línea</Title>
-          <Text>{item.is_online ? 'Sí' : 'No'}</Text>
-        </Col>
-        <Col span={24}>
-          <Title level={5}>Fotos</Title>
-          <div>
+      <div className="flex flex-col lg:flex-row gap-6">
+        <div className="lg:w-1/2">
+          <Carousel
+            autoplay
+            className="bg-black rounded-lg overflow-hidden group"
+            arrows
+          >
             {item.pictures.map((picture, index) => (
-              <img key={index} src={picture.url} alt={`Imagen ${index + 1}`} style={{ width: '100px', marginRight: '10px', marginBottom: '10px' }} />
+              <div key={index} className="aspect-square">
+                <img
+                  src={picture.url}
+                  alt={`Vista ${index + 1}`}
+                  className="w-full h-full object-cover"
+                />
+              </div>
             ))}
+          </Carousel>
+          <div className="pt-2">
+            <p className="flex items-center justify-center gap-2">
+              <EnvironmentOutlined />
+              {item.formatted_address}
+            </p>
           </div>
-        </Col>
-      </Row>
+        </div>
+
+        <div className="lg:w-1/2 space-y-6">
+          {item.description && (
+            <div className="border rounded-lg p-4">
+              <h3 className="font-medium  mb-2">Descripción</h3>
+              <p className="text-sm ">{item.description}</p>
+            </div>
+          )}
+          <div className="grid grid-cols-2 gap-4">
+            <InfoCard
+              icon={<FullscreenOutlined className="text-blue-500" />}
+              title="Tipo"
+              value={item.location_type}
+              subtitle={`${item.size_width}m x ${item.size_height}m`}
+            />
+            <InfoCard
+              icon={<ClockCircleOutlined className="text-green-500" />}
+              title="Tiempo de anuncios"
+              value={`${item.slot_length}s`}
+              subtitle={`${item.shows_per_hour} shows/hora`}
+            />
+            <InfoCard
+              icon={<GlobalOutlined className="text-purple-500" />}
+              title="Resolución"
+              value={`${item.resolution_width} x ${item.resolution_height}`}
+              subtitle="Calidad HD"
+            />
+            <InfoCard
+              icon={<DollarOutlined className="text-yellow-500" />}
+              title="Precio por día"
+              value={`${item.price_currency} ${item.price_per_day}`}
+              subtitle={`CPMI: ${item.cpmi}`}
+            />
+          </div>
+
+          <div className="border rounded-lg p-4 space-y-2">
+            <h3 className="font-medium ">Ubicación detallada</h3>
+            <p className="text-sm ">
+              {item.administrative_area_level_1},{' '}
+              {item.administrative_area_level_2}
+            </p>
+            <p className="text-sm ">
+              {item.country} ({item.country_iso})
+            </p>
+            <p className="text-sm ">CP: {item.zip_code}</p>
+            <div className="flex gap-4 text-sm ">
+              <span>Lat: {item.latitude}</span>
+              <span>Long: {item.longitude}</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </Modal>
   );
 };
+
+interface InfoCardProps {
+  icon: React.ReactNode;
+  title: string;
+  value: string;
+  subtitle: string;
+}
+
+const InfoCard: React.FC<InfoCardProps> = ({
+  icon,
+  title,
+  value,
+  subtitle,
+}) => (
+  <div className="border rounded-lg p-4 space-y-1">
+    <div className="flex items-center gap-2">
+      {icon}
+      <span className="text-sm ">{title}</span>
+    </div>
+    <div className="font-semibold">{value}</div>
+    <div className="text-sm text-gray-500">{subtitle}</div>
+  </div>
+);

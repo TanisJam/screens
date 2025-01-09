@@ -15,7 +15,6 @@ export const MapArea: React.FC<MapAreaProps> = ({
   function MapBoundsLogger() {
     const map = useMapEvents({
       moveend: () => {
-        console.log('Map bounds:', map.getBounds());
         onBoundsChange?.([
           [map.getBounds().getSouth(), map.getBounds().getWest()],
           [map.getBounds().getNorth(), map.getBounds().getEast()],

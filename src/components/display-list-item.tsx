@@ -22,7 +22,11 @@ export const DisplayListItem = ({ item }: DisplayListingProps) => {
           breakpoint === 'xs'
             ? [
                 <Tooltip title="Más información">
-                  <Button type="text" icon={<InfoCircleOutlined />} />
+                  <Button
+                    type="text"
+                    icon={<InfoCircleOutlined />}
+                    onClick={() => addDisplay(item)}
+                  />
                 </Tooltip>,
                 <Tooltip title="Agregar">
                   <Button type="primary" icon={<PlusOutlined />} />
