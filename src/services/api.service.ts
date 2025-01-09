@@ -31,3 +31,13 @@ export const getDisplays = async (
   );
   return response.data;
 };
+
+export const getDisplayById = async (id: string) => {
+  const response = await apiClient.get(`/displays/${id}`, {
+    params: {
+      currency: 'USD',
+      invoice_issuing_country: 'AR',
+    },
+  });
+  return response.data;
+};

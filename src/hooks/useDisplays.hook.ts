@@ -47,5 +47,11 @@ export const useDisplays = (): Readonly<UseDisplays> => {
       },
       [dispatch, query]
     ),
+    fetchDisplayById: useCallback(
+      (id: number) => {
+        dispatch(displaysActions.fetchDisplayById(id));
+      },
+      [dispatch]
+    ),
   };
 };

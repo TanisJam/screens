@@ -1,5 +1,5 @@
-import { CartDropdown } from '@/components';
-import { useAppCart } from '@/hooks';
+import { CartDropdown, DisplayDetailsModal } from '@/components';
+import { useAppCart, useAppState } from '@/hooks';
 import { createRootRoute, Link, Outlet } from '@tanstack/react-router';
 import { message } from 'antd';
 
@@ -10,6 +10,7 @@ export const Route = createRootRoute({
 });
 
 function App() {
+  const { selectedDisplay, toggleModal, isModalOpen } = useAppState();
   const { items, removeFromCart } = useAppCart();
   const [messageApi, contextHolder] = message.useMessage();
 
@@ -32,6 +33,13 @@ function App() {
       <hr />
       <main className="mx-auto  p-2">
         <Outlet />
+        {selectedDisplay !== null && (
+        <DisplayDetailsModal
+          visible={isModalOpen}
+          onClose={() => toggleModal()}
+          item={selectedDisplay}
+        />
+      )}
       </main>
       {/* <TanStackRouterDevtools /> */}
     </>

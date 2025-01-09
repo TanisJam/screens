@@ -105,4 +105,5 @@ export interface UseDisplays {
   setQuery: (params: GetDisplaysParams) => void;
   resetQuery: () => void;
   fetchDisplays: (controller: AbortController) => void;
+  fetchDisplayById: (id: number) => void;
 }

@@ -40,6 +40,7 @@ export const displaySlice = createSlice({
       state.loading = true;
     },
     fetchDisplaysSuccess: (state, action: PayloadAction<Display[]>) => {
+      console.log('action.payload', action.payload);
       state.data = action.payload;
       state.loading = false;
     },
@@ -66,7 +67,12 @@ export const displaySlice = createSlice({
 });
 
 export const displaysActions = {
-  fetchDisplays: createAction<FetchDisplaysPayload>(`${displaySlice.name}`),
+  fetchDisplays: createAction<FetchDisplaysPayload>(
+    `${displaySlice.name}/fetchDisplays`
+  ),
+  fetchDisplayById: createAction<number>(
+    `${displaySlice.name}/fetchDisplayById`
+  ),
   fetchDisplaysIsLoading: displaySlice.actions.fetchDisplaysIsLoading,
   fetchDisplaysSuccess: displaySlice.actions.fetchDisplaysSuccess,
   fetchDisplaysError: displaySlice.actions.fetchDisplaysError,

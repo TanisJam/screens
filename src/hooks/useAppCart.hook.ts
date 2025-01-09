@@ -9,17 +9,8 @@ import {
 } from '@/store/cart/slice';
 
 import { Display } from '@/models';
-import { message } from 'antd';
 
 export const useAppCart = () => {
-  const [messageApi] = message.useMessage();
-
-  const success = () => {
-    messageApi.open({
-      type: 'success',
-      content: 'This is a success message',
-    });
-  };
   const dispatch = useAppDispatch();
   const { displays, displayQuery } = useDisplays();
   const items = useAppSelector(selectCartItems);
@@ -36,7 +27,6 @@ export const useAppCart = () => {
         })
       );
     }
-    success();
   };
 
   const removeFromCart = (id: string) => {
