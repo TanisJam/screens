@@ -9,7 +9,8 @@ import '@ant-design/v5-patch-for-react-19';
 
 import { routeTree } from './routeTree.gen';
 import { Provider } from 'react-redux';
-import { store } from '@/store/root/config.store';
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from '@/store/root/config.store';
 
 const router = createRouter({ routeTree });
 
@@ -22,13 +23,15 @@ declare module '@tanstack/react-router' {
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Provider store={store}>
-      <ConfigProvider
-        theme={{
-          algorithm: theme.darkAlgorithm,
-        }}
-      >
-        <RouterProvider router={router} />
-      </ConfigProvider>
+      <PersistGate loading={null} persistor={persistor}>
+        <ConfigProvider
+          theme={{
+            algorithm: theme.darkAlgorithm,
+          }}
+        >
+          <RouterProvider router={router} />
+        </ConfigProvider>
+      </PersistGate>
     </Provider>
   </StrictMode>
 );

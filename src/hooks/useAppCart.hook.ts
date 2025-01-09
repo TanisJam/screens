@@ -16,7 +16,12 @@ export const useAppCart = () => {
   const items = useAppSelector(selectCartItems);
 
   const addToCart = (displayId: Display['id']) => {
-    const existingDisplay = displays.find((d) => d.id === displayId);
+    
+    const displayArray = Array.isArray(displays)
+    ? displays
+    : Object.values(displays) as Display[];
+    
+    const existingDisplay = displayArray.find((d) => d.id === displayId);
     if (existingDisplay) {
       dispatch(
         addItem({
