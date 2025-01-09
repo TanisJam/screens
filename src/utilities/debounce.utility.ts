@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function debounce<T extends (...args: any) => Promise<void>>(
+export function debounce<T extends (...args: any) => void | Promise<void>>(
   func: T,
   wait: number
 ) {

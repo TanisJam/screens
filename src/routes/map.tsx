@@ -1,11 +1,12 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { useDisplays } from '@/hooks';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { GetDisplaysParams } from '@/models';
 import { DisplayListing } from '@/components';
 import { convertDisplayToLocation, displayToDisplayItem } from '@/adapters';
 import { MapArea } from '@/components/map-area';
 import { debounce } from '@/utilities';
+import { DisplayFilters } from '@/components/display-filters';
 
 export const Route = createFileRoute('/map')({
   component: RouteComponent,
@@ -15,47 +16,63 @@ export const Route = createFileRoute('/map')({
 });
 
 function RouteComponent() {
-  const { displays, displaysLoading, fetchDisplays } = useDisplays();
+  const { displays, displaysLoading, fetchDisplays, setQuery, resetQuery } =
+    useDisplays();
   const params = Route.useSearch();
-  const { lat_ne = -33, lat_sw = -32, lng_ne = -60, lng_sw = -60 } = params;
-  const bounds: [[number, number], [number, number]] = [
-    [lat_sw, lng_sw],
-    [lat_ne, lng_ne],
+  const defaultBounds: [[number, number], [number, number]] = [
+    [params.lat_sw ?? -32, params.lng_sw ?? -60],
+    [params.lat_ne ?? -33, params.lng_ne ?? -60],
   ];
+
+  const [bounds, setBounds] = useState(defaultBounds);
+
+  useEffect(() => {
+    setQuery(params);
+  }, [params, setQuery]);
 
   useEffect(() => {
     const controller = new AbortController();
-    fetchDisplays(controller, params);
-    return () => {
-      controller.abort();
-    };
-  }, [fetchDisplays, params]);
+    fetchDisplays(controller);
+    return () => controller.abort();
+  }, [fetchDisplays]);
 
-  const onBoundsChange = debounce(
-    async (newBounds: [[number, number], [number, number]]) => {
-      const [lat_sw, lng_sw] = newBounds[0];
-      const [lat_ne, lng_ne] = newBounds[1];
+  useEffect(() => {
+    setQuery({
+      ...params,
+      lat_ne: bounds[1][0],
+      lat_sw: bounds[0][0],
+      lng_ne: bounds[1][1],
+      lng_sw: bounds[0][1],
+    });
+  }, [bounds, setQuery, params]);
 
-      const controller = new AbortController();
-      fetchDisplays(controller, {
-        ...params,
-        lat_sw,
-        lng_sw,
-        lat_ne,
-        lng_ne,
-      });
-    },
-    500
-  );
+  const onBoundsChange = debounce(setBounds, 500);
 
   return (
     <div className="p-2">
       <h1 className="text-3xl font-bold">Mapa</h1>
       <div className="flex flex-col-reverse sm:grid gap-4 grid-cols-10">
         <div
-          className="max-w-xl mx-auto p-4 sm:col-span-5 xl:col-span-4 sm:overflow-y-auto"
+          className="w-full max-w-xl mx-auto p-4 sm:col-span-5 xl:col-span-4 sm:overflow-y-auto"
           style={{ maxHeight: '90vh' }}
         >
+          <DisplayFilters
+            onApplyFilters={(filtros) => {
+              setQuery({
+                ...params,
+                ...filtros,
+              });
+            }}
+            onSearch={(search) => {
+              setQuery({
+                ...params,
+                search,
+              });
+            }}
+            resetFilters={() => {
+              resetQuery();
+            }}
+          />
           <DisplayListing
             loading={displaysLoading}
             displays={displayToDisplayItem(displays)}

@@ -100,8 +100,7 @@ export interface UseDisplays {
   displays: Display[];
   displaysLoading: boolean;
   displaysError: string;
-  fetchDisplays: (
-    controller: AbortController,
-    params: GetDisplaysParams
-  ) => void;
+  setQuery: (params: GetDisplaysParams) => void;
+  resetQuery: () => void;
+  fetchDisplays: (controller: AbortController) => void;
 }
